@@ -13,7 +13,7 @@ export default function Home() {
       </Head>
       <div>
         <Slider />
-        <PizzaList />
+        <PizzaList/>
       </div>
     </>
   );
