@@ -1,3 +1,4 @@
+import PizzaList from '@/components/PizzaList';
 import Slider from '@/components/Slider';
 import Head from 'next/head';
 
@@ -12,6 +13,7 @@ export default function Home() {
       </Head>
       <div>
         <Slider />
+        <PizzaList />
       </div>
     </>
   );
