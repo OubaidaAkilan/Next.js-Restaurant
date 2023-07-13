@@ -42,7 +42,12 @@
 }
 
 @media screen and (max-width: 480px) {
-  .container {
-    height: 50vh;
-  }
+.header{
+    padding: 0;
+
+}
+.arrow{
+  width: 60px;
+  height: 60px;
+}
 }
