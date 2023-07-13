@@ -36,3 +36,23 @@
   color: #444;
   text-align: center;
 }
+
+
+@media screen and (max-width: 480px) {
+
+  .pizzaCard{
+    width: 100%;
+  }
+  .container {
+    width: 100%;
+  }
+
+  .title {
+    font-size: 30px;
+  }
+
+  .price,
+  .desc {
+    font-size: 24px;
+  }
+}

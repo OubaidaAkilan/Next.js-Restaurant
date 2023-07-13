@@ -8,12 +8,10 @@
   margin-top: 2rem;
 }
 
-
 /* //======== Left  */
 .leftOrder {
   flex: 3;
 }
-
 
 /* //== Table  */
 .table {
@@ -35,7 +33,6 @@
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
-  
 }
 
 .orderID,
@@ -47,17 +44,12 @@
 
 /* //== Tracking Order  */
 
-.trackingOrder{
+.trackingOrder {
   display: grid;
-  grid-template-columns: repeat(4,1fr);
-  
+  grid-template-columns: repeat(4, 1fr);
 
   margin-top: 3rem;
 }
-
-
-
-
 
 /* //======== Right  */
 
@@ -95,9 +87,37 @@
   padding: 0.5rem;
   font-size: 18px;
   font-weight: 600;
-  color:teal ;
+  color: teal;
   border: none;
   background-color: #fff;
   margin-top: 1rem;
   text-transform: uppercase;
+}
+
+@media screen and (max-width: 480px) {
+  .container {
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .table {
+    display: flex;
+    gap: 2rem;
+
+    border-bottom: 1px solid #555;
+  }
+
+  .trackingOrder,
+  .trTitle {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    align-items: flex-start;
+    padding-left: 1rem;
+  }
+
+.rightOrder{
+  margin-bottom: 2rem;
+}
+
 }
