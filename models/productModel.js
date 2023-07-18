@@ -33,11 +33,8 @@ const productSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-//==== 2- Create model
-
-const productModel = mongoose.model('Product', productSchema);
-
-export default mongoose.models.Product || productModel;
+export default mongoose.models.Product ||
+  mongoose.model('Product', productSchema);
 
 // It checks if mongoose.models.Product exists and is truthy.
 // If mongoose.models.Product is truthy, it exports it as the default export.
@@ -47,4 +44,26 @@ export default mongoose.models.Product || productModel;
 This code assumes that there is either a mongoose.models.Product object or 
 a productModel object available for exporting. The || operator is used as a logical OR 
 operator to select the first truthy value encountered. 
+*/
+
+/* 
+//====Object of product
+{
+    "title": "pizza 1",
+    "desc": "product 1",
+    "img": "/images/slide1.png",
+    "prices": [
+        10,
+        15,
+        20
+    ],
+    "extraOptions": [
+        {
+            "text": "tomato sauce",
+            "price": 1
+        }
+    ]
+}
+
+
 */

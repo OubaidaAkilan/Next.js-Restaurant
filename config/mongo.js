@@ -21,21 +21,35 @@ if (!cached) {
 }
 
 async function dbConnect() {
-  if (cached.conn) {
+  try {
+    
+    if (cached.conn) {
+      return cached.conn;
+    }
+
+    if (!cached.promise) {
+      const opts = {
+        bufferCommands: false,
+      };
+
+      cached.promise = mongoose
+        .connect(MONGO_URL, { dbName: process.env.DB_NAME }, opts)
+        .then((conn) => {
+          console.log('Database connected :' + conn.connection.host);
+
+          return conn;
+        })
+        .catch((err) => {
+          console.log(`Faild to connect with database : ${err}`);
+          process.exit(1);
+        });
+    }
+
+    cached.conn = await cached.promise;
     return cached.conn;
+  } catch (error) {
+    console.log('dbConnection', error);
   }
-
-  if (!cached.promise) {
-    const opts = {
-      bufferCommands: false,
-    };
-
-    cached.promise = mongoose.connect(MONGO_URL, opts).then((mongoose) => {
-      return mongoose;
-    });
-  }
-  cached.conn = await cached.promise;
-  return cached.conn;
 }
 
 export default dbConnect;
