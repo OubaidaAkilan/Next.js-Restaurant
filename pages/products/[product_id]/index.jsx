@@ -1,16 +1,17 @@
-import styles from '../../styles/Product.module.css';
+import styles from '@/styles/Product.module.css';
 import Image from 'next/image';
+import axios from 'axios';
 
 import { useState } from 'react';
 
-const Product = () => {
-  const pizza = {
-    id: 1,
-    img: '/images/slide1.png',
-    name: 'CAMPAGNOLA',
-    price: [19.9, 23.9, 27.9],
-    desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis arcu purus, rhoncus fringilla vestibulum vel, dignissim vel ante. Nulla facilisi. Nullam a urna sit amet tellus pellentesque egestas in in ante.',
-  };
+const Product = ({ pizza }) => {
+  // pizza = {
+  //   id: 1,
+  //   img: '/images/slide1.png',
+  //   title: 'CAMPAGNOLA',
+  //   price: [19.9, 23.9, 27.9],
+  //   desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis arcu purus, rhoncus fringilla vestibulum vel, dignissim vel ante. Nulla facilisi. Nullam a urna sit amet tellus pellentesque egestas in in ante.',
+  // };
 
   const [size, setSize] = useState(0);
 
@@ -28,8 +29,8 @@ const Product = () => {
           </div>
         </div>
         <div className={styles.right}>
-          <h1 className={styles.title}>{pizza.name}</h1>
-          <span className={styles.price}>${pizza.price[size]}</span>
+          <h1 className={styles.title}>{pizza.title}</h1>
+          <span className={styles.price}>${pizza.prices[size]}</span>
           <p className={styles.desc}>{pizza.desc}</p>
 
           <h3 style={{ fontWeight: 'bold', fontSize: '22px' }}>
@@ -104,3 +105,28 @@ const Product = () => {
 };
 
 export default Product;
+
+/* getServerSideProps fetches data from an external source during runtime. 
+It's useful when you need to serve up-to-date information that changes frequently, 
+like product information on an e-commerce site or user-specific data like a shopping cart. 
+However, using getServerSideProps has a performance impact since the data is fetched every 
+time a request is made to the server, which may slow down load times 
+if the data changes frequently. */
+
+export const getServerSideProps = async (context) => {
+  const product_id = context.params.product_id;
+
+  const res = await axios.get(
+    `http://localhost:3000/api/products/${product_id}`
+  );
+
+  return {
+    props: {
+      pizza: res.data,
+    },
+  };
+};
+
+//======Useful Links
+
+// https://www.linkedin.com/pulse/getstaticprops-getserversideprops-which-method-choose-arnav-shukla/
