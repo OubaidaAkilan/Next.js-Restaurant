@@ -40,7 +40,24 @@ export default async function handler(req, res) {
   // @route   POST domain.com/api/products
   // @access  Private
 
-  /*  
+  if (method === 'POST') {
+    try {
+      const product = await productModel.create(req.body);
+
+      res.status(201).json(product);
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  }
+
+  /*   
+  =========
+    End POST 
+  ==============================
+*/
+}
+
+/*  
         The body of a product
  {
     "title": "pizza 1",
@@ -59,20 +76,3 @@ export default async function handler(req, res) {
     ]
 } 
 */
-
-  if (method === 'POST') {
-    try {
-      const product = await productModel.create(req.body);
-
-      res.status(201).json(product);
-    } catch (err) {
-      res.status(500).json(err);
-    }
-  }
-
-  /*   
-  =========
-    End POST 
-  ==============================
-*/
-}
