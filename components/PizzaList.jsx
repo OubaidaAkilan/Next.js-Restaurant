@@ -15,8 +15,8 @@ const PizzaList = ({ pizzaList }) => {
           </p>
         </div>
         <div className={styles.main}>
-          {pizzaList.map((pizzaItem) => (
-            <PizzaCard key={pizzaItem._id} pizza={pizzaItem} />
+          {pizzaList.map((pizzaItem,index) => (
+            <PizzaCard key={pizzaItem._id + index} pizza={pizzaItem} />
           ))}
         </div>
       </div>
