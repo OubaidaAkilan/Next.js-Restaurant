@@ -4,6 +4,10 @@ import axios from 'axios';
 
 import { useState } from 'react';
 
+import { useDispatch } from 'react-redux';
+
+import { addProduct } from '@/redux/cartSlice';
+
 const Product = ({ pizza }) => {
   const [size, setSize] = useState(0);
 
@@ -35,6 +39,16 @@ const Product = ({ pizza }) => {
 
       setExtras(extras.filter((extra) => extra._id !== item._id));
     }
+  };
+
+  //======Redux
+
+  const dispatch = useDispatch();
+
+  const handleAddNewProduct = (e) => {
+    e.preventDefault();
+
+    dispatch(addProduct({ ...pizza, extras, quantity, price }));
   };
 
   return (
@@ -100,7 +114,11 @@ const Product = ({ pizza }) => {
               onChange={(e) => setQuantity(e.target.value)}
               className={styles.quantity}
             />
-            <button className={styles.button}>Add to Cart</button>
+            <button
+              className={styles.button}
+              onClick={(e) => handleAddNewProduct(e)}>
+              Add to Cart
+            </button>
           </div>
         </div>
       </div>
