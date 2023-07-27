@@ -3,21 +3,42 @@ import React, { useState, useEffect } from 'react';
 import styles from '../styles/Cart.module.css';
 import Image from 'next/image';
 
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import {
   PayPalScriptProvider,
   PayPalButtons,
   usePayPalScriptReducer,
 } from '@paypal/react-paypal-js';
+import axios from 'axios';
+import { useRouter } from 'next/router';
+
+import { reset } from '@/redux/cartSlice';
 
 const Cart = () => {
   const cart = useSelector((state) => state.cart);
 
   const [open, setOpen] = useState(false);
 
+  const router = useRouter();
+
+  const dispatch = useDispatch();
+
+  const createOrder = async (data) => {
+    try {
+      const res = await axios.post(`http://localhost:3000/api/orders`, data);
+
+      if (res.status === 201) {
+        router.push(`/orders/${res.data._id}`);
+        dispatch(reset());
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   //======Start Paypal Section
-  const amount = '2';
+  const amount = cart.total;
   const currency = 'USD';
   const style = { layout: 'vertical' };
 
@@ -150,7 +171,7 @@ const Cart = () => {
               <PayPalScriptProvider
                 options={{
                   clientId:
-                    'ASSsxV24T4rqFp-0Xk7wyBikrZLPqoO8984i2rXbdAD2oDy5JJpJFbBRlV4whm8vZjTmpnkImL6uWY_A',
+                    'Aak8ZUrW5GFaHP1XU0cuN-7mm2R-PswehB7a7gr7S1vhPhtZmKusVV1tAa3BA1Bdj2jjtcWhpFLBKjkH',
                   components: 'buttons',
                   currency: 'USD',
                   'disable-funding': 'credit,card,p24',

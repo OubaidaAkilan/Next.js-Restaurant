@@ -1,12 +1,12 @@
-//path: domain.com/api/products/product_id
+//path: domain.com/api/orders/order_id
 
 import dbConnect from '@/config/mongo';
-import productModel from '@/models/productModel.js';
+import orderModel from '@/models/orderModel.js';
 
 export default async function handler(req, res) {
   const {
     method,
-    query: { product_id },
+    query: { order_id },
   } = req;
 
   dbConnect();
@@ -19,9 +19,9 @@ export default async function handler(req, res) {
 
   if (method === 'GET') {
     try {
-      const product = await productModel.findById(product_id);
+      const order = await orderModel.findById(order_id);
 
-      res.status(200).json(product);
+      res.status(200).json(order);
     } catch (err) {
       res.status(500).json(err);
     }
@@ -39,15 +39,15 @@ export default async function handler(req, res) {
   ===============
 */
 
-  // @desc    Update a product
-  // @route   PUT domain.com/api/products
+  // @desc    Update a order
+  // @route   PUT domain.com/api/orders
   // @access  Private
 
   if (method === 'PUT') {
     try {
-      const product = await productModel.updateOne(req.body);
+      const order = await orderModel.updateOne({ _id: order_id }, req.body);
 
-      res.status(201).json(product);
+      res.status(204).json(order);
     } catch (err) {
       res.status(500).json(err);
     }
@@ -65,15 +65,15 @@ export default async function handler(req, res) {
   ===============
 */
 
-  // @desc    Update a product
-  // @route   DELETE domain.com/api/products
+  // @desc    Update a order
+  // @route   DELETE domain.com/api/orders
   // @access  Private
 
   if (method === 'DELETE') {
     try {
-      const product = await productModel.delete(req.body);
+      const order = await orderModel.delete(req.body);
 
-      res.status(201).json(product);
+      res.status(205).json(order);
     } catch (err) {
       res.status(500).json(err);
     }
@@ -85,23 +85,3 @@ export default async function handler(req, res) {
   ==============================
 */
 } // ========End the Handle function
-
-/*  
-        The body of a product
- {
-    "title": "pizza 1",
-    "desc": "product 1",
-    "img": "/images/slide1.png",
-    "prices": [
-        10,
-        15,
-        20
-    ],
-    "extraOptions": [
-        {
-            "text": "tomato sauce",
-            "price": 1
-        }
-    ]
-} 
-*/
