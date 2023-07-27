@@ -1,12 +1,85 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 import styles from '../styles/Cart.module.css';
 import Image from 'next/image';
 
 import { useSelector } from 'react-redux';
 
+import {
+  PayPalScriptProvider,
+  PayPalButtons,
+  usePayPalScriptReducer,
+} from '@paypal/react-paypal-js';
+
 const Cart = () => {
   const cart = useSelector((state) => state.cart);
+
+  const [open, setOpen] = useState(false);
+
+  //======Start Paypal Section
+  const amount = '2';
+  const currency = 'USD';
+  const style = { layout: 'vertical' };
+
+  // Custom component to wrap the PayPalButtons and handle currency changes
+  // Custom component to wrap the PayPalButtons and handle currency changes
+  const ButtonWrapper = ({ currency, showSpinner }) => {
+    // usePayPalScriptReducer can be use only inside children of PayPalScriptProviders
+    // This is the main reason to wrap the PayPalButtons in a new component
+    const [{ options, isPending }, dispatch] = usePayPalScriptReducer();
+
+    useEffect(() => {
+      dispatch({
+        type: 'resetOptions',
+        value: {
+          ...options,
+          currency: currency,
+        },
+      });
+    }, [currency, showSpinner]);
+
+    return (
+      <>
+        {showSpinner && isPending && <div className='spinner' />}
+        <PayPalButtons
+          style={style}
+          disabled={false}
+          forceReRender={[amount, currency, style]}
+          fundingSource={undefined}
+          createOrder={(data, actions) => {
+            return actions.order
+              .create({
+                purchase_units: [
+                  {
+                    amount: {
+                      currency_code: currency,
+                      value: amount,
+                    },
+                  },
+                ],
+              })
+              .then((orderId) => {
+                // Your code here after create the order
+                return orderId;
+              });
+          }}
+          onApprove={function (data, actions) {
+            return actions.order.capture().then(function (details) {
+              const shipping = details.purchase_units[0].shipping;
+              createOrder({
+                customer: shipping.name.full_name,
+                address: shipping.address.address_line_1,
+                total: cart.total,
+                method: 1,
+              });
+            });
+          }}
+        />
+      </>
+    );
+  };
+
+  //======End Paypal Section
 
   return (
     <div className={styles.cart}>
@@ -70,7 +143,26 @@ const Cart = () => {
           <p className={styles.p}>Subtotal: ${cart.total}</p>
           <p className={styles.p}>Discount: $0.00</p>
           <p className={styles.p}>Total: ${cart.total}</p>
-          <button className={styles.rightBtn}>Checkout now!</button>
+
+          {open ? (
+            <>
+              <button className={styles.cashBtn}>CASH ON DELIVERY </button>
+              <PayPalScriptProvider
+                options={{
+                  clientId:
+                    'ASSsxV24T4rqFp-0Xk7wyBikrZLPqoO8984i2rXbdAD2oDy5JJpJFbBRlV4whm8vZjTmpnkImL6uWY_A',
+                  components: 'buttons',
+                  currency: 'USD',
+                  'disable-funding': 'credit,card,p24',
+                }}>
+                <ButtonWrapper currency={currency} showSpinner={false} />
+              </PayPalScriptProvider>
+            </>
+          ) : (
+            <button onClick={() => setOpen(true)} className={styles.rightBtn}>
+              Checkout now!
+            </button>
+          )}
         </div>
       </div>
     </div>
