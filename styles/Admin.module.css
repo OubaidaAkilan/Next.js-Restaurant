@@ -1,0 +1,100 @@
+.admin {
+  width: 100%;
+  min-height: calc(100vh - 100px);
+}
+
+.container {
+  display: flex;
+  gap: 1rem;
+  padding: 0;
+
+  margin: 1rem auto;
+}
+
+.products,
+.orders {
+  flex: 1;
+  max-width: 100%;
+  /* overflow-x: auto; */
+}
+
+.table {
+  width: 100%;
+  background-color: #323232;
+  border-collapse: collapse;
+  color: #fff;
+}
+
+.caption,
+.th {
+  text-align: left;
+}
+
+.caption {
+  text-transform: uppercase;
+  background-color: hsl(0 0% 0%);
+  font-weight: 700;
+  font-size: 1.5rem;
+}
+
+.caption,
+.td,
+.th {
+  padding: 1rem;
+}
+
+.tr:nth-of-type(2n) {
+  background-color: hsl(0 0% 0% /0.1);
+}
+
+.th {
+  background-color: hsl(0 0% 0% /0.5);
+}
+
+@media (max-width: 650px) {
+  /*===== Start Container ===== */
+
+  .container {
+    flex-direction: column;
+  }
+
+  /*===== End Container ===== */
+
+  /*===== Start Table ===== */
+  .thead {
+    display: none;
+  }
+  .td {
+    display: block;
+
+    /* OR
+   display: grid;
+    grid-template-columns: 15ch auto;
+    */
+  }
+  .td::before {
+    content: attr(data-cell) ': ';
+    font-weight: 700;
+    margin-right: 1rem;
+  } /* OR  .td:nth-of-type(1)::before {
+    content: 'Title';
+  }*/
+
+  .td:first-child {
+    position: relative;
+    margin: 1rem 0;
+  }
+
+  .td:first-child::before {
+    content: '';
+  }
+
+  .img {
+    position: absolute;
+    top: 0;
+    /* right: 50%;
+    transform: translateX(50%); */
+  }
+
+  /* ===== End Table ===== */
+}
