@@ -1,8 +1,8 @@
-import React from 'react'
+import React from 'react';
 import styles from '@/styles/Admin.module.css';
 import Image from 'next/image';
 
-const ProductsTable = ({ showTabel }) => {
+const ProductsTable = ({ showTabel, products }) => {
   return (
     <div
       className={`${styles.products} ${
@@ -20,63 +20,40 @@ const ProductsTable = ({ showTabel }) => {
           </tr>
         </thead>
         <tbody>
-          <tr className={styles.tr}>
-            <td data-cell='Image' className={styles.td}>
-              <Image
-                className={styles.img}
-                src={`/images/slide1.png`}
-                width={50}
-                height={50}
-                objectFit='contain'
-              />
-            </td>
-            <td data-cell='Id' className={styles.td}>
-              123456789456130256
-            </td>
-            <td data-cell='Title' className={styles.td}>
-              TITLEEXAMPLW
-            </td>
-            <td data-cell='Price' className={styles.td}>
-              $15
-            </td>
-            <td data-cell='Action' className={styles.td}>
-              <div>
-                <button>Edit</button>
-                <button>Delete</button>
-              </div>
-            </td>
-          </tr>
-
-          <tr className={styles.tr}>
-            <td data-cell='Image' className={styles.td}>
-              <Image
-                className={styles.img}
-                src={`/images/slide1.png`}
-                width={50}
-                height={50}
-                objectFit='contain'
-              />
-            </td>
-            <td data-cell='Id' className={styles.td}>
-              123456789456130256
-            </td>
-            <td data-cell='Title' className={styles.td}>
-              TITLEEXAMPLW
-            </td>
-            <td data-cell='Price' className={styles.td}>
-              $15
-            </td>
-            <td data-cell='Action' className={styles.td}>
-              <div>
-                <button>Edit</button>
-                <button>Delete</button>
-              </div>
-            </td>
-          </tr>
+          {products.map((product, index) => (
+            <tr className={styles.tr} key={product._id + index}>
+              <td data-cell='Image' className={styles.td}>
+                <Image
+                  className={product.img}
+                  src={`/images/slide1.png`}
+                  width={50}
+                  height={50}
+                  objectFit='contain'
+                />
+              </td>
+              <td data-cell='Id' className={styles.td}>
+                {product._id}
+              </td>
+              <td data-cell='Title' className={styles.td}>
+                {product.title}
+              </td>
+              <td data-cell='Price' className={styles.td}>
+                {product.prices.map((price, index) => {
+                  return <span key={price + index}>${price + ` `}</span>;
+                })}
+              </td>
+              <td data-cell='Action' className={styles.td}>
+                <div>
+                  <button>Edit</button>
+                  <button>Delete</button>
+                </div>
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>
   );
 };
 
-export default ProductsTable
+export default ProductsTable;

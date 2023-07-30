@@ -1,7 +1,7 @@
-import React from 'react'
+import React from 'react';
 import styles from '@/styles/Admin.module.css';
 
-const OrdersTable = ({ showTabel }) => {
+const OrdersTable = ({ showTabel, orders }) => {
   return (
     <div className={styles.orders}>
       <table className={styles.table}>
@@ -17,32 +17,34 @@ const OrdersTable = ({ showTabel }) => {
           </tr>
         </thead>
         <tbody>
-          <tr className={styles.tr}>
-            <td data-cell='Id' className={styles.td}>
-              123456789456130256
-            </td>
-            <td data-cell='Customer' className={styles.td}>
-              John Doe
-            </td>
-            <td data-cell='Total' className={styles.td}>
-              $38
-            </td>
-            <td data-cell='Payment' className={styles.td}>
-              paid
-            </td>
-            <td data-cell='Status' className={styles.td}>
-              preparing
-            </td>
-            <td data-cell='Action' className={styles.td}>
-              <div>
-                <button>Next stage</button>
-              </div>
-            </td>
-          </tr>
+          {orders.map((order, index) => (
+            <tr className={styles.tr} key={order._id + index}>
+              <td data-cell='Id' className={styles.td}>
+                {order._id}
+              </td>
+              <td data-cell='Customer' className={styles.td}>
+                {order.customer}
+              </td>
+              <td data-cell='Total' className={styles.td}>
+                {order.total}
+              </td>
+              <td data-cell='Payment' className={styles.td}>
+                {order.method}
+              </td>
+              <td data-cell='Status' className={styles.td}>
+                {order.status}
+              </td>
+              <td data-cell='Action' className={styles.td}>
+                <div>
+                  <button>Next stage</button>
+                </div>
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>
   );
 };
 
-export default OrdersTable
+export default OrdersTable;
