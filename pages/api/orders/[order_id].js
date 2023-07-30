@@ -45,9 +45,16 @@ export default async function handler(req, res) {
 
   if (method === 'PUT') {
     try {
-      const order = await orderModel.updateOne({ _id: order_id }, req.body);
+      const order = await orderModel.findByIdAndUpdate(
+        { _id: order_id },
+        req.body
+      );
 
-      res.status(204).json(order);
+      if (order) {
+        res.status(200).json('The order has been updated');
+      } else {
+        res.status(501).json('The order is not exist');
+      }
     } catch (err) {
       res.status(500).json(err);
     }
@@ -71,9 +78,13 @@ export default async function handler(req, res) {
 
   if (method === 'DELETE') {
     try {
-      const order = await orderModel.delete(req.body);
+      const order = await orderModel.findByIdAndDelete({ _id: order_id });
 
-      res.status(205).json(order);
+      if (order) {
+        res.status(200).json('The order has been deleted');
+      } else {
+        res.status(501).json('The order is not exist');
+      }
     } catch (err) {
       res.status(500).json(err);
     }
