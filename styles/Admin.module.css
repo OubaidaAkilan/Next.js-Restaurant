@@ -5,11 +5,72 @@
 
 .container {
   display: flex;
+  flex-direction: column;
   gap: 1rem;
   padding: 0;
 
   margin: 1rem auto;
 }
+
+/*====Start Tabs */
+
+.tabs {
+  display: flex;
+  font-size: 1.2rem;
+  font-weight: 700;
+  text-transform: capitalize;
+  line-height: 1.5;
+  border-radius: 5px;
+  color: #fff;
+}
+
+.tab {
+  background-color: #7b7b7b;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+.tab:first-child {
+  border-radius: 5px 0 0 5px;
+}
+
+.tab:last-child {
+  border-radius: 0 5px 5px 0;
+}
+
+.activeItem {
+  background-color: orangered;
+}
+
+/* Define the animation for showing the item */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Define the animation for hiding the item */
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.showTable {
+  opacity: 1;
+  animation: fadeIn 0.5s;
+}
+
+.hideTable {
+  opacity: 0;
+  animation: fadeOut 0.5s;
+}
+/*====End Tabs */
 
 .products,
 .orders {
@@ -49,6 +110,17 @@
 
 .th {
   background-color: hsl(0 0% 0% /0.5);
+}
+
+.td[data-cell='Action'] div {
+  display: flex;
+  align-items: stretch;
+  justify-content: flex-start;
+  gap: 0.5rem;
+}
+
+.td[data-cell='Action'] div button {
+  padding: 3px 6px;
 }
 
 @media (max-width: 650px) {

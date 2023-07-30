@@ -1,81 +1,46 @@
-import React from 'react';
-import styles from '../../styles/Admin.module.css';
-import Image from 'next/image';
+import React, { useState } from 'react';
+import styles from '@/styles/Admin.module.css';
+import ProductsTable from '@/components/ProductsTable';
+import OrdersTable from '@/components/OrdersTable';
 
 const Admin = () => {
+  const [filterItem, setFilterItem] = useState('products');
+  const [activeFilter, setActiveFilter] = useState('products');
+  const [showTabel, setShowTabel] = useState(true);
+
+  const handleFilter = (item) => {
+    setActiveFilter(item);
+    setShowTabel(false);
+
+    setTimeout(() => {
+      setShowTabel(true);
+      item === 'products' ? setFilterItem('products') : setFilterItem('orders');
+    }, 500);
+  };
   return (
     <div className={styles.admin}>
       <div className={styles.container + ` container`}>
-        <div className={styles.products}>
-          <table className={styles.table}>
-            <caption className={styles.caption}>Products</caption>
-            <thead className={styles.thead}>
-              <tr className={styles.tr}>
-                <th className={styles.th}>Image</th>
-                <th className={styles.th}>Id</th>
-                <th className={styles.th}>Title</th>
-                <th className={styles.th}>Price</th>
-                <th className={styles.th}>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr className={styles.tr}>
-                <td data-cell='Image' className={styles.td}>
-                  <Image
-                    className={styles.img}
-                    src={`/images/slide1.png`}
-                    width={50}
-                    height={50}
-                    objectFit='contain'
-                  />
-                </td>
-                <td data-cell='Id' className={styles.td}>
-                  123456789456130256
-                </td>
-                <td data-cell='Title' className={styles.td}>
-                  TITLEEXAMPLW
-                </td>
-                <td data-cell='Price' className={styles.td}>
-                  $15
-                </td>
-                <td data-cell='Action' className={styles.td}>
-                  <button>Edit</button>
-                  <button>Delete</button>
-                </td>
-              </tr>
-
-              <tr className={styles.tr}>
-                <td data-cell='Image' className={styles.td}>
-                  <Image
-                    className={styles.img}
-                    src={`/images/slide1.png`}
-                    width={50}
-                    height={50}
-                    objectFit='contain'
-                  />
-                </td>
-                <td data-cell='Id' className={styles.td}>
-                  123456789456130256
-                </td>
-                <td data-cell='Title' className={styles.td}>
-                  TITLEEXAMPLW
-                </td>
-                <td data-cell='Price' className={styles.td}>
-                  $15
-                </td>
-                <td data-cell='Action' className={styles.td}>
-                  <button>Edit</button>
-                  <button>Delete</button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+        <div className={styles.tabs}>
+          <div
+            onClick={() => handleFilter('products')}
+            className={`${styles.tab} ${
+              activeFilter === 'products' ? `${styles.activeItem}` : ''
+            } `}>
+            Products
+          </div>
+          <div
+            className={`${styles.tab} ${
+              activeFilter === 'orders' ? `${styles.activeItem}` : ''
+            } `}
+            onClick={() => handleFilter('orders')}>
+            Orders
+          </div>
         </div>
-        <div className={styles.orders}>
-          <table className={styles.table}>
-            <caption className={styles.caption}>Orders</caption>
-          </table>
-        </div>
+        {filterItem === 'products' ? (
+          <ProductsTable showTabel={showTabel} />
+        ) : (
+          <OrdersTable showTabel={showTabel} />
+        )}
       </div>
     </div>
   );
