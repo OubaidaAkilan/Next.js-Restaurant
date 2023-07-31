@@ -20,7 +20,7 @@ const Admin = ({ products, orders }) => {
     setTimeout(() => {
       setShowTabel(true);
       item === 'products' ? setFilterItem('products') : setFilterItem('orders');
-    }, 500);
+    }, 100);
   };
   return (
     <div className={styles.admin}>

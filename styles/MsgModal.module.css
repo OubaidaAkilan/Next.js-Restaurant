@@ -1,0 +1,29 @@
+.wrapper {
+  width: 500px;
+  background-color: white;
+  border-radius: 20px;
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  position: absolute;
+  top: 10%;
+  transform: translate(50%);
+}
+
+.wrapper svg {
+  align-self: flex-end;
+  cursor: pointer;
+}
+
+.title {
+  font-weight: 700;
+  font-size: 20px;
+  margin-bottom: 2rem;
+}
+
+.title span {
+  color: teal;
+}
