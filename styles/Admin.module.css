@@ -77,7 +77,11 @@
   flex: 1;
   max-width: 100%;
   /* overflow-x: auto; */
+
+  position: relative;
 }
+
+
 
 .table {
   width: 100%;
@@ -121,6 +125,7 @@
 
 .td[data-cell='Action'] div button {
   padding: 3px 6px;
+  cursor: pointer;
 }
 
 @media (max-width: 650px) {
