@@ -47,11 +47,12 @@ export default async function handler(req, res) {
     try {
       const order = await orderModel.findByIdAndUpdate(
         { _id: order_id },
-        req.body
+        req.body,
+        { new: true }
       );
 
       if (order) {
-        res.status(200).json('The order has been updated');
+        res.status(200).json(order);
       } else {
         res.status(501).json('The order is not exist');
       }
