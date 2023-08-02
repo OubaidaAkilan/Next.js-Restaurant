@@ -1,10 +1,13 @@
+import { useState } from 'react';
 import PizzaList from '@/components/PizzaList';
 import Slider from '@/components/Slider';
 import Head from 'next/head';
 import axios from 'axios';
+import AddNewProductBtn from '@/components/AddNewProductBtn';
+import CreateNewProductModal from '@/components/Modal/CreateNewProductModal';
 
-export default function Home({ pizzaList }) {
-  // console.log(pizzaList);
+export default function Home({ pizzaList, admin }) {
+  const [showProductModal, setShowProductModal] = useState(false);
   return (
     <>
       <Head>
@@ -15,11 +18,38 @@ export default function Home({ pizzaList }) {
       </Head>
       <div>
         <Slider />
+        {admin && (
+          <AddNewProductBtn setShowProductModal={setShowProductModal} />
+        )}
+        {showProductModal && (
+          <CreateNewProductModal setShowProductModal={setShowProductModal} />
+        )}
         <PizzaList pizzaList={pizzaList} />
       </div>
     </>
   );
 }
+
+export const getServerSideProps = async (ctx) => {
+  const myCookie = ctx.req?.cookies || '';
+
+  let admin = false;
+
+  const res = await axios.get('http://localhost:3000/api/products');
+
+  if (myCookie.token === process.env.TOKEN) {
+    admin = true;
+  }
+
+  return {
+    props: {
+      pizzaList: res.data,
+      admin,
+    },
+  };
+};
+
+// getStaticProps does not have a context param
 
 /* getStaticProps is a method used to fetch data at build time. 
 This means that the data is fetched when the application is built and is then served statically. 
@@ -39,12 +69,3 @@ This means that your app will have faster load times and better performance. */
 //====SSG====//
 //== This function will pass the props into the component
 //====THIS FUN REPRESENT THE SERVER SIDE, AND IT WILL RUN BEFORE RENDER THE COMPONENT
-export const getStaticProps = async () => {
-  const res = await axios.get('http://localhost:3000/api/products');
-
-  return {
-    props: {
-      pizzaList: res.data,
-    },
-  };
-};
