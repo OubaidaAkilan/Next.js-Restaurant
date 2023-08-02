@@ -25,10 +25,13 @@ const Navbar = () => {
         </div>
         <div className={styles.item}>
           <ul className={styles.list}>
-            <Link href={`/`} >
+            <Link href={`/`}>
               <li className={styles.listItem}>Homepage</li>
             </Link>
-            <li className={styles.listItem}>Products</li>
+            <Link href={`/admin`}>
+              <li className={styles.listItem}>Admin</li>
+            </Link>
+
             <li className={styles.listItem}>Menu</li>
 
             <Image src='/images/logo.png' width={160} height={69} alt='logo' />
