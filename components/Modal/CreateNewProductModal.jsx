@@ -1,26 +1,14 @@
 import React, { useState } from 'react';
 import styles from '@/styles/CreateNewProductModal.module.css';
 import { AiOutlineClose } from 'react-icons/ai';
+import axios from 'axios';
 
 const CreateNewProductModal = ({ setShowProductModal }) => {
-  //     {
-  //     "title": "pizza 1",
-  //     "desc": "product 1",
-  //     "img": "/images/slide1.png",
-  //     "prices": [
-  //         10,
-  //         15,
-  //         20
-  //     ],
-  //     "extraOptions": [
-  //         {
-  //             "text": "tomato sauce",
-  //             "price": 1
-  //         }
-  //     ]
-  // }
-
   const [file, setFile] = useState(null);
+
+  const [showMsg, setShowMsg] = useState(false);
+
+  const [message, setMessage] = useState('');
 
   const [formData, setFormData] = useState({
     productTitle: '',
@@ -32,6 +20,7 @@ const CreateNewProductModal = ({ setShowProductModal }) => {
   });
 
   const handleChangePrice = (e, index) => {
+    setShowMsg(false);
     const currentPrices = formData.prices;
     currentPrices[index] = e.target.value;
     setFormData((prevFormData) => ({
@@ -40,7 +29,8 @@ const CreateNewProductModal = ({ setShowProductModal }) => {
     }));
   };
 
-  const handleExtraOptions = (e) => {
+  const handleExtraOptions = () => {
+    setShowMsg(false);
     if (formData.extraText && formData.extraPrice) {
       setFormData((prevFormData) => ({
         ...prevFormData,
@@ -58,6 +48,7 @@ const CreateNewProductModal = ({ setShowProductModal }) => {
   };
 
   const handleChange = (event) => {
+    setShowMsg(false);
     const { name, value } = event.target;
     setFormData((prevFormData) => ({
       ...prevFormData,
@@ -65,20 +56,64 @@ const CreateNewProductModal = ({ setShowProductModal }) => {
     }));
   };
 
-  const handleSubmit = (event) => {
+  const createNewProduct = async (imageUrl) => {
+    const newProduct = {
+      title: formData.productTitle,
+      desc: formData.productDesc,
+      img: imageUrl,
+      prices: formData.prices,
+      extraOptions: formData.extraOptions,
+    };
+
+    try {
+      await axios.post(`http://localhost:3000/api/products`, newProduct);
+    } catch (err) {
+      setMessage(err.message);
+    }
+  };
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
+
+    let urlImage = '';
+
     // You can do something with the form data here
-    console.log(Object.values(formData));
     if (
       formData.productTitle === '' ||
       formData.productDesc === '' ||
       formData.prices.length === 0 ||
-      formData.extraOptions.length === 0
+      formData.extraOptions.length === 0 ||
+      !file
     ) {
-      console.log('fill out all fields');
+      setMessage('fill out all fields');
+      setShowMsg(true);
       return;
     }
-    console.log(formData);
+    // console.log(formData);
+
+    try {
+      const data = new FormData();
+
+      data.append('file', file);
+      //== It is configration on cloudinary to create new folder and make it accissable to everyone
+      //go into the --> Setting > upload > Add upload preset > change the 'Upload preset name' and 'Folder' as you like  these field should have the same name > change the 'Signing Mode:' to 'Unsigned'
+
+      data.append('upload_preset', 'pizza-products');
+
+      const uploadRes = await axios.post(
+        `https://api.cloudinary.com/v1_1/dcai2gay6/image/upload`, // == To upload image this url is constant just change the <>dcai2gay6<> your id
+        data
+      );
+
+      urlImage = uploadRes.data.url;
+
+      await createNewProduct(urlImage);
+      setMessage('The product has been added');
+      setShowMsg(true);
+    } catch (err) {
+      setMessage(err.message);
+      setShowMsg(true);
+    }
 
     setFormData((prev) => ({
       ...prev,
@@ -163,7 +198,7 @@ const CreateNewProductModal = ({ setShowProductModal }) => {
             onChange={handleChange}
             value={formData.extraPrice}
           />
-          <button onClick={(e) => handleExtraOptions(e)}>Add</button>
+          <button onClick={() => handleExtraOptions()}>Add</button>
         </div>
       </div>
       {/* Rendering extraOptions inputs */}
@@ -175,6 +210,7 @@ const CreateNewProductModal = ({ setShowProductModal }) => {
         ))}
       </div>
       <button onClick={(e) => handleSubmit(e)}>Add New Product</button>
+      {showMsg && <span>{message}</span>}
     </div>
   );
 };

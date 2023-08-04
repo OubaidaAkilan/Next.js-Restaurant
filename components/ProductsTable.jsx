@@ -36,7 +36,7 @@ const ProductsTable = ({ showTabel, products }) => {
     setMessage(res.data);
 
     setMsgModal(true);
-    console.log(res.data);
+    // console.log(res.data);
   };
   //====End Handle Update Product
 
