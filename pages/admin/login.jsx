@@ -4,7 +4,6 @@ import { useState } from 'react';
 import styles from '../../styles/Login.module.css';
 
 const Login = () => {
-
   const [username, setUsername] = useState(null);
 
   const [password, setPassword] = useState(null);
@@ -29,6 +28,11 @@ const Login = () => {
     <div className={styles.container}>
       <div className={styles.wrapper}>
         <h1>Admin Dashboard</h1>
+        <p>
+          Username : admin
+          <br />
+          Password : 123456
+        </p>
         <input
           placeholder='username'
           className={styles.input}

@@ -8,6 +8,11 @@
 .wrapper {
   display: flex;
   flex-direction: column;
+  
+}
+
+.wrapper p{
+  margin: 10px 0;
 }
 
 .input {
