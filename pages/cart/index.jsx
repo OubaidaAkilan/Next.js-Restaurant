@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import styles from '../styles/Cart.module.css';
+import styles from '@/styles/Cart.module.css';
 import Image from 'next/image';
 
 import { useSelector, useDispatch } from 'react-redux';
@@ -123,8 +123,8 @@ const Cart = () => {
             </thead>
             <tbody>
               {/* // item one */}
-              {cart.products.map((product) => (
-                <tr className={styles.trTitle}>
+              {cart.products.map((product, index) => (
+                <tr className={styles.trTitle} key={product + index}>
                   <td className={styles.tdTitleItem}>
                     <span className={styles.imageProduct}>
                       <Image
