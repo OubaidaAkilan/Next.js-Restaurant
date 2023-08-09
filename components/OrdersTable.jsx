@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styles from '@/styles/Admin.module.css';
-import axios from 'axios';
+import axiosInstance from '@/config/AxiosInstance';
 
 //======I recived the orders props from (admin page)
 const OrdersTable = ({ showTabel, orders }) => {
@@ -8,13 +8,11 @@ const OrdersTable = ({ showTabel, orders }) => {
 
   const statusOrder = ['preparing', 'on the way', 'delivered'];
 
-  
-
   const handleStatusOrder = async (order_id, currentStatus) => {
     if (currentStatus === 2) return;
     try {
-      const res = await axios.put(
-        `http://localhost:3000/api/orders/${order_id}`,
+      const res = await axiosInstance.put(
+        `/api/orders/${order_id}`,
         { status: currentStatus + 1 }
       );
 

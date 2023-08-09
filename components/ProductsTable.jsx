@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from '@/styles/Admin.module.css';
 import Image from 'next/image';
-import axios from 'axios';
+import axiosInstance from '@/config/AxiosInstance';
 import MsgModal from './Modal/MsgModal';
 
 const ProductsTable = ({ showTabel, products }) => {
@@ -13,8 +13,8 @@ const ProductsTable = ({ showTabel, products }) => {
 
   //====Start Handle Update Product
   const handleEditProduct = async (product_id) => {
-    const res = await axios.put(
-      `http://localhost:3000/api/products/${product_id}`,
+    const res = await axiosInstance.put(
+      `/api/products/${product_id}`,
       {
         title: 'pizza 2',
         desc: 'product 2',
@@ -43,8 +43,8 @@ const ProductsTable = ({ showTabel, products }) => {
   //====Start Handle Delete Product
   const handleDeleteProduct = async (product_id) => {
     try {
-      const res = await axios.delete(
-        `http://localhost:3000/api/products/${product_id}`
+      const res = await axiosInstance.delete(
+        `/api/products/${product_id}`
       );
 
       setPizaaProducts(

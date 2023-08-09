@@ -1,6 +1,6 @@
 import styles from '@/styles/Product.module.css';
 import Image from 'next/image';
-import axios from 'axios';
+import axiosInstance from '@/config/AxiosInstance';
 
 import { useState } from 'react';
 
@@ -92,7 +92,7 @@ const Product = ({ pizza }) => {
           {/* //=== Ingredients Section ===// */}
           <h3 className={styles.choose}>Choose additional ingredients</h3>
           <div className={styles.ingredients}>
-            {console.log(pizza)}
+            {/* {console.log(pizza)} */}
             {pizza.extraOptions.map((item, index) => (
               <div className={styles.option} key={item + index}>
                 <input
@@ -138,8 +138,8 @@ if the data changes frequently. */
 export const getServerSideProps = async (context) => {
   const product_id = context.params.product_id;
 
-  const res = await axios.get(
-    `http://localhost:3000/api/products/${product_id}`
+  const res = await axiosInstance.get(
+    `/api/products/${product_id}`
   );
 
   return {

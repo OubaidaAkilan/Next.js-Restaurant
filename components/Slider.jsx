@@ -22,7 +22,7 @@ const Slider = () => {
 
   return (
     <header className={styles.header}>
-      {console.log(index, 'index')}
+      {/* {console.log(index, 'index')} */}
       <div className={styles.container}>
         <Image
           className={styles.arrow}

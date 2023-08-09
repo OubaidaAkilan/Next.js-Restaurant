@@ -75,6 +75,7 @@ Next-Restaurant git:(main)$ npm start
 - This [Stack Overflow Answer](https://stackoverflow.com/a/45905418) helped me how to navigate to the page end.
 - This [W3School Tutorial](https://www.w3schools.com/js/js_cookies.asp) helped me how to manage the user session and cookies using Document object without 3rd parties.
 - This [Tip](https://dev.to/rajeshroyal/page-not-found-error-on-netlify-reactjs-react-router-solved-43oa) for fixing the React Single Page Application deployed on Netlify.
+- How to set up the environment variables [environment variables](https://github.com/vercel/next.js/tree/canary/examples/environment-variables) for local, development and production modes.
 
 ## Contact
 
