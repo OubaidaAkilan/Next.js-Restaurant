@@ -3,7 +3,7 @@ import React from 'react';
 import styles from '../../styles/Order.module.css';
 
 import OrderStatus from '@/components/OrderStatus';
-import axios from 'axios';
+import axiosInstance from '@/config/AxiosInstance';
 
 const Order = ({ order }) => {
   return (
@@ -92,8 +92,8 @@ const Order = ({ order }) => {
 export default Order;
 
 export const getServerSideProps = async ({ params }) => {
-  const res = await axios.get(
-    `http://localhost:3000/api/orders/${params.order_id}`
+  const res = await axiosInstance.get(
+    `/api/orders/${params.order_id}`
   );
 
   return {

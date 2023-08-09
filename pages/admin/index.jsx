@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styles from '@/styles/Admin.module.css';
 import ProductsTable from '@/components/ProductsTable';
 import OrdersTable from '@/components/OrdersTable';
-import axios from 'axios';
+import axiosInstance from '@/config/AxiosInstance';
 
 const Admin = ({ products, orders }) => {
   const [filterItem, setFilterItem] = useState('products');
@@ -65,8 +65,12 @@ export const getServerSideProps = async (ctx) => {
     };
   }
 
-  const productsRes = await axios.get('http://localhost:3000/api/products');
-  const ordersRes = await axios.get('http://localhost:3000/api/orders');
+  const productsRes = await axiosInstance.get(
+    `/api/products`
+  );
+  const ordersRes = await axiosInstance.get(
+    `/api/orders`
+  );
 
   return {
     props: {

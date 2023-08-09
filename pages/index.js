@@ -2,7 +2,8 @@ import { useState } from 'react';
 import PizzaList from '@/components/PizzaList';
 import Slider from '@/components/Slider';
 import Head from 'next/head';
-import axios from 'axios';
+import axiosInstance from '@/config/AxiosInstance';
+
 import AddNewProductBtn from '@/components/AddNewProductBtn';
 import CreateNewProductModal from '@/components/Modal/CreateNewProductModal';
 
@@ -35,7 +36,7 @@ export const getServerSideProps = async (ctx) => {
 
   let admin = false;
 
-  const res = await axios.get('http://localhost:3000/api/products');
+  const res = await axiosInstance.get(`/api/products`);
 
   if (myCookie.token === process.env.TOKEN) {
     admin = true;
