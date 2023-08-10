@@ -55,7 +55,7 @@ Insert gif or link to demo
 $ git clone git@github.com:OubaidaAkilan/Next-Restaurant.git
 $ cd Next-Restaurant
 Next-Restaurant git:(main)$ npm i
-Next-Restaurant git:(main)$ npm start
+Next-Restaurant git:(main)$ npm run dev
 ```
 
 ## Features to be Added
