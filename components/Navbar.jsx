@@ -34,7 +34,7 @@ const Navbar = () => {
 
             <li className={styles.listItem}>Menu</li>
 
-            <Image src='/images/logo.png' width={160} height={69} alt='logo' />
+            <Image src='/images/logoo.png' width={160} height={69} alt='logo' />
 
             <li className={styles.listItem}>Events</li>
             <li className={styles.listItem}>Blog</li>
