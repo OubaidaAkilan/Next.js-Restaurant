@@ -13,27 +13,23 @@ const ProductsTable = ({ showTabel, products }) => {
 
   //====Start Handle Update Product
   const handleEditProduct = async (product_id) => {
-    const res = await axiosInstance.put(
-      `/api/products/${product_id}`,
-      {
-        title: 'pizza 2',
-        desc: 'product 2',
-        img: '/images/slide1.png',
-        prices: [10, 15, 20],
-        extraOptions: [
-          {
-            text: 'tomato sauce',
-            price: 2,
-          },
-        ],
-      }
-    );
+    const res = await axiosInstance.put(`/api/products/${product_id}`, {
+      title: 'pizza 2',
+      desc: 'product 2',
+      img: '/images/slide1.png',
+      prices: [10, 15, 20],
+      extraOptions: [
+        {
+          text: 'tomato sauce',
+          price: 2,
+        },
+      ],
+    });
 
-    setPizaaProducts(
-      pizaaProducts.filter((product) => product._id !== product_id)
-    );
+    setPizaaProducts(pizaaProducts);
 
-    setMessage(res.data);
+    // setMessage(res.data);
+    setMessage('We currently work on this feature');
 
     setMsgModal(true);
     // console.log(res.data);
@@ -43,9 +39,7 @@ const ProductsTable = ({ showTabel, products }) => {
   //====Start Handle Delete Product
   const handleDeleteProduct = async (product_id) => {
     try {
-      const res = await axiosInstance.delete(
-        `/api/products/${product_id}`
-      );
+      const res = await axiosInstance.delete(`/api/products/${product_id}`);
 
       setPizaaProducts(
         pizaaProducts.filter((product) => product._id !== product_id)
