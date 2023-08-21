@@ -52,10 +52,10 @@ Insert gif or link to demo
 ## Setup
 
 ```bash
-$ git clone git@github.com:OubaidaAkilan/Next-Restaurant.git
-$ cd Next-Restaurant
-Next-Restaurant git:(main)$ npm i
-Next-Restaurant git:(main)$ npm run dev
+$ git clone git@github.com:OubaidaAkilan/Next.js-Restaurant.git
+$ cd Next.js-Restaurant
+Next.js-Restaurant git:(main)$ npm i
+Next.js-Restaurant git:(main)$ npm run dev
 ```
 
 ## Features to be Added
