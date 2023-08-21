@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styles from '@/styles/CreateNewProductModal.module.css';
 import { AiOutlineClose } from 'react-icons/ai';
 import axiosInstance from '@/config/AxiosInstance';
+import axios from 'axios';
 
 const CreateNewProductModal = ({ setShowProductModal }) => {
   const [file, setFile] = useState(null);
@@ -66,12 +67,12 @@ const CreateNewProductModal = ({ setShowProductModal }) => {
     };
 
     try {
-      await axiosInstance.post(
-        `/api/products`,
-        newProduct
-      );
+      await axiosInstance.post(`/api/products`, newProduct);
+      setMessage('The product has been added');
+      setShowMsg(true);
     } catch (err) {
       setMessage(err.message);
+      setShowMsg(true);
     }
   };
 
@@ -103,7 +104,7 @@ const CreateNewProductModal = ({ setShowProductModal }) => {
 
       data.append('upload_preset', 'pizza-products');
 
-      const uploadRes = await axiosInstance.post(
+      const uploadRes = await axios.post(
         `https://api.cloudinary.com/v1_1/dcai2gay6/image/upload`, // == To upload image this url is constant just change the <>dcai2gay6<> your id
         data
       );
@@ -111,8 +112,6 @@ const CreateNewProductModal = ({ setShowProductModal }) => {
       urlImage = uploadRes.data.url;
 
       await createNewProduct(urlImage);
-      setMessage('The product has been added');
-      setShowMsg(true);
     } catch (err) {
       setMessage(err.message);
       setShowMsg(true);
